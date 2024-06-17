@@ -39,9 +39,9 @@ const StatusCodes =require("../statuscodes.js");
 };
 
 const logIn = async (req, res, next) => {
-    const { email, password, name } = req.body;
+    const { email, password, } = req.body;
     
-    console.log(name, email, password);
+    console.log( email, password);
    
     const userExist = await userModel.findOne({ email: email });
    
@@ -61,6 +61,13 @@ const logIn = async (req, res, next) => {
             message: "incorrect password",
         });
     }
+
+    return res.status(StatusCodes.CREATED).json({
+        status: true,
+        message: "welcome to DEBUX_EATERY",
+        data: userExist,
+    });
+  
 
 };
 
