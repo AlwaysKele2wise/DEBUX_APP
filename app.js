@@ -1,16 +1,25 @@
-const express = require("express");
-require("dotenv").config();
-
-const { PORT } = require("./config/envConfig");
-
-
-
-// const PORT = process.env.PORT || 9000
-const app = express()
+   const express = require("express");
+   require("dotenv").config();
+   const { notFound, errorHandler } = require("./middlewares/strikas");
+   const { PORT } = require("./config/envConfig");
+   const app = express()
 
 
 
-app.listen(PORT, () => {
-   console.log("Debux app listening on port:" + PORT)
+   
+   require("./act/routes")(app)
+   require("./act/db")(app)
+   
 
-});
+
+   
+
+   //Error Middlewares
+   app.use(notFound);
+   app.use(errorHandler);
+
+   //server
+   app.listen(PORT, () => {
+      console.log("Debux app listening on port:" + PORT)
+
+   });

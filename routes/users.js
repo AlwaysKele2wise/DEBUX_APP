@@ -1,11 +1,10 @@
-const express = require("express");
-const router = express.router();
+    const express = require("express");
+    const router = express.Router();
+    const usersController = require("../controller/users.js");
+   
+    router.post("/register", usersController.userReg);
+    
 
 
-
-router.post('/test',  (req, res) => {
-    console.log("testing in progress...")
-});
-
-
-module.exports = router;
+    
+    module.exports = router;
