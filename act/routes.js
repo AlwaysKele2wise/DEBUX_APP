@@ -1,7 +1,7 @@
     const express = require("express")
     const usersRouter = require("../routes/users");
     const {VERSION} = require("../config/envConfig");
-
+    const menusRouter = require("../routes/users")
 
 
     module.exports = (app) => {
@@ -29,7 +29,7 @@
     const version = "/api/v1/dx";
 
     app.use(`${VERSION}/users`, usersRouter);
-    //app.use(`${version}/authens`, authensRouter);
+    app.use(`${version}/menus`, menusRouter);
     
 
     }

@@ -2,7 +2,6 @@ const { userSignUpMsg } = require("../outlook/users.js");
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user.js")
 const StatusCodes =require("../statuscodes.js");
-const user = require("../models/user.js")
 
 
 
