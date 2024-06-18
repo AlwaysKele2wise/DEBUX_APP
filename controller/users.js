@@ -1,7 +1,8 @@
- const { userSignUpMsg } = require("../outlook/users.js");
- const bcrypt = require("bcrypt");
- const userModel = require("../models/user.js")
+const { userSignUpMsg } = require("../outlook/users.js");
+const bcrypt = require("bcrypt");
+const userModel = require("../models/user.js")
 const StatusCodes =require("../statuscodes.js");
+const user = require("../models/user.js")
 
 
 
@@ -38,12 +39,16 @@ const StatusCodes =require("../statuscodes.js");
     });
 };
 
+ 
 const logIn = async (req, res, next) => {
+   
+  
     const { email, password, } = req.body;
     
     console.log( email, password);
-   
-    const userExist = await userModel.findOne({ email: email });
+
+   //login user that is already registered
+    const userExist = await userModel.findOne({ email: req.body.email });
    
     if (!userExist) {
         return res.status(StatusCodes.BAD_REQUEST).json({
@@ -52,23 +57,29 @@ const logIn = async (req, res, next) => {
         });
     }
 
-    //ELSE
-
-    const passwordMacthes = await bcrypt.compare(password, passwordMacthes)
-    if (!passwordMacthes) {
+    //Check if password matches
+ 
+    const pMacth = await bcrypt.compare(password, userExist.password)   
+    if (!pMacth) {
         return res.status(StatusCodes.BAD_REQUEST).json({
             status: false,
             message: "incorrect password",
         });
+    
+
     }
 
     return res.status(StatusCodes.CREATED).json({
         status: true,
         message: "welcome to DEBUX_EATERY",
         data: userExist,
-    });
-  
-
+    }); 
 };
 
  module.exports = { userReg, logIn };
+
+
+
+
+
+  

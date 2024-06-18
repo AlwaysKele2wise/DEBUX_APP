@@ -3,7 +3,7 @@ const StatusCodes = {
     SWITCHING_PROTOCOLS: 101,
     PROCESSING: 102,
     OK: 200,
-    CREATED: 201,
+    CREATED: 200,
     ACCEPTED: 202,
     NO_CONTENT: 204,
     RESET_CONTENT: 205,
