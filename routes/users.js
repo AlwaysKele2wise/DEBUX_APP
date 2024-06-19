@@ -6,8 +6,8 @@
    
     router.post("/register", usersController.userReg);
     router.post("/access", usersController.logIn);
-    router.get('/menu', foodMenuController.createMenuItem);
-    router.get('/gen', foodMenuController.getMenuItems);
+   router.post('/menu', foodMenuController.createMenuItems);
+   router.get('/gen', foodMenuController.getMenuItems);
 
 
     
