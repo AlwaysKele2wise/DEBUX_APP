@@ -8,7 +8,8 @@
     router.post("/access", usersController.logIn);
    router.post('/menu', foodMenuController.createMenuItems);
    router.get('/gen', foodMenuController.getMenuItems);
-
+   router.post('/order', foodMenuController.placeOrder);
+   
 
     
     module.exports = router;

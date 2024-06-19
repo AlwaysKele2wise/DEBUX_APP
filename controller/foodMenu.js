@@ -1,7 +1,9 @@
 const Menu = require("../models/food");
 const StatusCodes = require("../statuscodes");
+const orderModel = require("../models/orderModel");
 
 
+//create item
 const createMenuItems = async (itemData, res, req) => {
   try {
     const menuItem = new Menu(itemData);
@@ -17,7 +19,7 @@ const createMenuItems = async (itemData, res, req) => {
 
 createMenuItems({name: 'Yam', description: 'A good one with pepper sauce', price: 60.56});
 
-
+//Get item
 const getMenuItems = async (req, res) => {
   try {
     const menuItems = await Menu.find(req.body) 
@@ -31,8 +33,24 @@ const getMenuItems = async (req, res) => {
   }
 };
 
-getMenuItems();
+getMenuItems()
 
+//Place Order
+const placeOrder = async (req,res) => {
+  try {
+    // Example: Accept dish IDs and customer name
+const newOrder = new orderModel({
+});
+  
+ const savedOrder  = await newOrder.save(req.savedOrder);
+ res.status(StatusCodes.CREATED).json({
+  message: "Order saved successfully",
+  data: savedOrder,
+});
+  } catch (error) {
+    console.log(error)
+    res.status (500).send({})
+  }
 
-
-module.exports = {createMenuItems, getMenuItems}
+};
+module.exports = {createMenuItems, getMenuItems, placeOrder}
