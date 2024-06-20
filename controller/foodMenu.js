@@ -17,7 +17,7 @@ const createMenuItems = async (itemData, res, req) => {
   }
 };
 
-createMenuItems({name: 'Yam', description: 'A good one with pepper sauce', price: 60.56});
+//createMenuItems({name: 'Yam', description: 'A good one with pepper sauce', price: '60.56'});
 
 //Get item
 const getMenuItems = async (req, res) => {
@@ -33,7 +33,7 @@ const getMenuItems = async (req, res) => {
   }
 };
 
-getMenuItems()
+//getMenuItems()
 
 //Place Order
 const placeOrder = async (req,res) => {
@@ -53,4 +53,19 @@ const newOrder = new orderModel({
   }
 
 };
-module.exports = {createMenuItems, getMenuItems, placeOrder}
+
+
+const retrieveOrder = async (req, res) => {
+  try{
+    const order = await orderModel.findOne({ id: req.params.itemData})
+    res.status(StatusCodes.CREATED).json({
+      message: " orders retieved successfully",
+      data: order,
+    });
+  } catch (error) {
+    console.log(error)
+    res.status (500).send({})
+  }
+}
+//retrieveOrder()
+module.exports = {createMenuItems, getMenuItems, placeOrder, retrieveOrder}

@@ -7,9 +7,9 @@
     router.post("/register", usersController.userReg);
     router.post("/access", usersController.logIn);
    router.post('/menu', foodMenuController.createMenuItems);
-   router.get('/gen', foodMenuController.getMenuItems);
+   router.get('/get', foodMenuController.getMenuItems);
    router.post('/order', foodMenuController.placeOrder);
-   
+   router.get('/getorder', foodMenuController.retrieveOrder);
 
     
     module.exports = router;

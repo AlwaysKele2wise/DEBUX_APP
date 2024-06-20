@@ -1,14 +1,8 @@
 const mongoose = require('mongoose');
 
 const ordersSchema = new mongoose.Schema({
-  dishIds: [
-    { type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Dish' }
-],
-  foods: [
-    { type: mongoose.Schema.Types.ObjectId, 
-    ref: 'Food' }
-    ],
+  dishIds: String,
+  foods:String,
   customerId: String,
   customerName: String,
   // Add other relevant fields (e.g., address, payment details, etc.)
