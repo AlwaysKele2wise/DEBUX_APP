@@ -6,7 +6,7 @@
 
     module.exports = (app) => {
 
-        app.use((req, res, next) => {
+    app.use((req, res, next) => {
             res.header("Access-Control-Allow-Origin", "*");
             res.header(
                 "Access-Control-Allow-Headers", 
@@ -25,6 +25,12 @@
     app.use(express.json({ limit: '100mb' }));
 
 
+    // Root route handler
+    app.get('/', (req, res) => {
+    res.send('Welcome to DEBUX_APP!');
+     });
+
+   
 
     const version = "/api/v1/dx";
 
