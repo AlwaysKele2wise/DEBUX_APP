@@ -27,7 +27,7 @@
 
     // Root route handler
     app.get('/', (req, res) => {
-    res.send('Welcome to DEBUX_APP!');
+    res.send('Welcome to BELLE_FOOD!');
      });
 
    
