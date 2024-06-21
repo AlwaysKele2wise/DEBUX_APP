@@ -22,7 +22,7 @@ const createMenuItems = async (itemData, res, req) => {
 //Get item
 const getMenuItems = async (req, res) => {
   try {
-    const menuItems = await Menu.find(req.body) 
+    const menuItems = await Menu.findById(req.body) 
     res.status(StatusCodes.CREATED).json({
       message: "food added successfully",
       data: menuItems,
