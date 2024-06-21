@@ -2,13 +2,25 @@ const { userSignUpMsg } = require("../outlook/users.js");
 const bcrypt = require("bcrypt");
 const userModel = require("../models/user.js")
 const StatusCodes =require("../statuscodes.js");
+const Joi = require("joi");
 
 
 
 
  const userReg = async (req, res, next) => {  
-    const { email, password } = req.body;
+    const schema = Joi.object({
+          email: Joi.string().email().required(),
+          password: Joi.string().min(6).required(),
+    });
 
+     const { error } =schema.validate(req.body);
+     if (error) {
+        error.StatusCodes = StatusCodes.CONFLICT;
+        return next (error);
+     }
+    
+    const { email, password } = req.body;
+   
     const userExist = await userModel.findOne({ email: email });
        if (userExist) {
         return res.status(StatusCodes.BAD_REQUEST).json({
@@ -40,40 +52,55 @@ const StatusCodes =require("../statuscodes.js");
 
  
 const logIn = async (req, res, next) => {
-   
-  
-    const { email, password, } = req.body;
-    
-    console.log( email, password);
+  try {
+    const schema = Joi.object({
+      email: Joi.string().email().required(),
+      password: Joi.string().min(6).required(),
+    });
 
-   //login user that is already registered
-    const userExist = await userModel.findOne({ email: req.body.email });
-   
+    const { error } = schema.validate(req.body);
+    if (error) {
+      error.StatusCodes = StatusCodes.CONFLICT;
+      return next(error);
+    }
+
+    const { email, password } = req.body;
+
+    // Find the user account
+    const userExist = await userModel.findOne({ email });
+
     if (!userExist) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            status: false,
-            message: "user account not found please signup",
-        });
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        status: false,
+        message: "User account not found. Please sign up.",
+      });
     }
 
-    //Check if password matches
- 
-    const pMacth = await bcrypt.compare(password, userExist.password)   
-    if (!pMacth) {
-        return res.status(StatusCodes.BAD_REQUEST).json({
-            status: false,
-            message: "incorrect password",
-        });
-    
+    // Check if password matches
+    const passwordMatches = await bcrypt.compare(password, userExist.password);
 
-    }
-
-    return res.status(StatusCodes.CREATED).json({
+    if (passwordMatches) {
+      return res.status(StatusCodes.CREATED).json({
         status: true,
-        message: "welcome to DEBUX_EATERY",
+        message: "Welcome to BELLE_FOOD",
         data: userExist,
-    }); 
+      });
+    } else {
+      return res.status(StatusCodes.BAD_REQUEST).json({
+        status: false,
+        message: "Incorrect password",
+      });
+    }
+  } catch (error) {
+    // Handle any bcrypt or other errors here
+    console.error("Error comparing passwords:", error);
+    return res.status(StatusCodes.INTERNAL_SERVER_ERROR).json({
+      status: false,
+      message: "An error occurred while checking the password",
+    });
+  }
 };
+
 
  module.exports = { userReg, logIn };
 

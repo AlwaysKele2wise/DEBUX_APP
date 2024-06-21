@@ -19,12 +19,6 @@
           type: String,
           required: [true, 'Password is required'],
           minlength: [8, 'Password must be at least 8 characters long'],
-          validate : {
-            validator : function(value) {
-                return value == this.password
-            },
-            message : "Passwords do not match"
-        }
         }
         },
         { timestamps: true }
@@ -32,12 +26,12 @@
     
 
     // Pre-save hook to hash the password before saving
-userSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, 10);
-  }
-  next();
-});
+// userSchema.pre('save', async function(next) {
+//   if (this.isModified('password')) {
+//     this.password = await bcrypt.hash(this.password, 10);
+//   }
+//   next();
+// });
 
     const UserModel = mongoose.model('User', userSchema);
 
